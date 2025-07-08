@@ -60,21 +60,38 @@ void port_scanner(const char* ip, const char* start_port, const char* end_port){
     }
 }
 
-int main(int argc, char* argv[]){
-
-
-    if(argc < 4){
-        printf("Please enter the server IP address and range of ports to be scanned\n");
-        printf("USAGE: %s IPv4 First_Port Last_Port\n", argv[0]);
-        exit(1);
-    }
-                
-    
+int main(int argc, char* argv[]) {
     char tIP[16] = {0};
-    strncpy(tIP, argv[1], sizeof(tIP) - 1);
-    
-    port_scanner(tIP, argv[2], argv[3]);
+    char start_port[6] = {0};
+    char end_port[6] = {0};
+
+    if (argc < 4) {
+        printf("No arguments provided.:\n");
+
+        printf("Enter IP address: ");
+        if (scanf("%15s", tIP) != 1) {
+            fprintf(stderr, "Invalid IP input\n");
+            exit(1);
+        }
+
+        printf("Enter first port: ");
+        if (scanf("%5s", start_port) != 1) {
+            fprintf(stderr, "Invalid first port\n");
+            exit(1);
+        }
+
+        printf("Enter last port: ");
+        if (scanf("%5s", end_port) != 1) {
+            fprintf(stderr, "Invalid last port\n");
+            exit(1);
+        }
+    } else {
+        strncpy(tIP, argv[1], sizeof(tIP) - 1);
+        strncpy(start_port, argv[2], sizeof(start_port) - 1);
+        strncpy(end_port, argv[3], sizeof(end_port) - 1);
+    }
+
+    port_scanner(tIP, start_port, end_port);
 
     return 0;
-
 }
